@@ -21,5 +21,8 @@ $(document).ready(function () {
     autostart: true,
   });
   //mic button
-  $("MicBtn").click(function () {});
+  $("#MicBtn").click(function () {
+    $("#Oval").attr("hidden", true);
+    $("#SiriWave").attr("hidden", false);
+  });
 });
