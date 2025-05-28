@@ -26,4 +26,16 @@ $(document).ready(function () {
     $("#SiriWave").attr("hidden", false);
     eel.allCommands()();
   });
+
+  function doc_keyUp(e) {
+    // this would test for whichever key is 40 (down arrow) and the ctrl key at the same time
+
+    if (e.key === "j" && e.metaKey) {
+      //eel.playAssistantSound();
+      $("#Oval").attr("hidden", true);
+      $("#SiriWave").attr("hidden", false);
+      eel.allCommands()();
+    }
+  }
+  document.addEventListener("keyup", doc_keyUp, false);
 });

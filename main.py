@@ -1,11 +1,18 @@
 import os
-
+import webbrowser
 import eel
 from engine.command import *
-eel.init("www")
 
-os.system('start msedge --app "http://localhost:8000/index.html"')
+def start():
+    #print("Starting Eel frontend...", flush=True)
+    eel.init("www")
 
+    try:
+        webbrowser.open("http://localhost:8000/index.html")
+    except Exception as e:
+        print("Browser failed to open:", e)
 
+    eel.start('index.html', mode=None, host='localhost', block=False)
 
-eel.start('index.html', mode=None, host='localhost', block=True) 
+    while True:
+        eel.sleep(1)  # Keep the process alive
