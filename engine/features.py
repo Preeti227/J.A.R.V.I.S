@@ -1,22 +1,25 @@
+import os
 import re
 import struct
 import time
 import webbrowser
-
+import eel
 import pvporcupine
 import pyaudio
 from engine.command import speak
 from engine.config import ASSISTANT_NAME
-import os
+
 import sqlite3
 import pywhatkit as kit
 
 from engine.helper import extract_yt_term
+con = sqlite3.connect("jarvis.db")
+cursor = con.cursor()
 
 def openCommand(query):
-    query=query.replace(ASSISTANT_NAME,"")
-    query=query.replace("open","")
-    query=query.lower()
+    query = query.replace(ASSISTANT_NAME, "")
+    query = query.replace("open", "")
+    query.lower()
 
     app_name = query.strip()
 
@@ -48,6 +51,7 @@ def openCommand(query):
                         speak("not found")
         except:
             speak("some thing went wrong")
+
 
 
 def PlayYoutube(query):

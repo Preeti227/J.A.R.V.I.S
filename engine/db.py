@@ -1,16 +1,17 @@
+import csv
 import sqlite3
-con=sqlite3.connect('jarvis.db')
-cursor=con.cursor()
+
+con = sqlite3.connect("jarvis.db")
+cursor = con.cursor()
 
 query = "CREATE TABLE IF NOT EXISTS sys_command(id integer primary key, name VARCHAR(100), path VARCHAR(1000))"
 cursor.execute(query)
-
-#query= "INSERT INTO sys_command VALUES (null,'ONENOTE','C:\\Program Files\\Microsoft Office\\root\\Office16\\ONENOTE.exe')"
+#query = "INSERT INTO sys_command VALUES (null,'one note', 'C:\\rogram Files\\Microsoft Office\\root\\Office16\\ONENOTE.exe')"
 #cursor.execute(query)
 #con.commit()
-
-query = "CREATE TABLE IF NOT EXISTS web_command(id integer primary key, name VARCHAR(100), path VARCHAR(1000))"
+query = "CREATE TABLE IF NOT EXISTS web_command(id integer primary key, name VARCHAR(100), url VARCHAR(1000))"
 cursor.execute(query)
-#query= "INSERT INTO web_command VALUES (null,'GMail','https://mail.google.com/mail/u/0/#inbox')"
-#cursor.execute(query)
-#con.commit()
+
+query = "INSERT INTO web_command VALUES (null,'chatgpt', 'https://chatgpt.com/')"
+cursor.execute(query)
+con.commit()

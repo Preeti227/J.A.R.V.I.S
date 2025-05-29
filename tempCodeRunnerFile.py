@@ -1,11 +1,27 @@
-import os
+import multiprocessing
+import time
 
-import eel
-from engine.command import *
-eel.init("www")
+def startJarvis():
+    from main import start
+    start()
 
-os.system('start msedge --app "http://localhost:8000/index.html"')
+def listenHotword():
+    from engine.features import hotword
+    hotword()
 
+if __name__ == '__main__':
+    p1 = multiprocessing.Process(target=startJarvis)
+    p2 = multiprocessing.Process(target=listenHotword)
 
+    p1.start()
+    p2.start()
 
-eel.start('index.html', mode=None, host='localhost', block=True) 
+    try:
+        # Let processes run
+        p1.join()
+    except KeyboardInterrupt:
+        # Graceful shutdown on Ctrl+C
+        if p2.is_alive():
+            p2.terminate()
+            p2.join()
+        print("System stop")

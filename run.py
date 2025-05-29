@@ -2,10 +2,12 @@ import multiprocessing
 import time
 
 def startJarvis():
+    print("Proces 1")
     from main import start
     start()
 
 def listenHotword():
+    print("Process 2")
     from engine.features import hotword
     hotword()
 
