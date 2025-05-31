@@ -202,4 +202,16 @@ body {
   max-width: 80%;
   width: auto;
 }
+.btn-close {
+  filter: invert(1); /* Makes it white by default */
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.btn-close:hover {
+  transform: scale(1.2);
+  /* Blue tint filter */
+  filter: invert(47%) sepia(76%) saturate(2282%) hue-rotate(178deg)
+    brightness(100%) contrast(101%);
+}
+
 /* Chat Box Start End*/
