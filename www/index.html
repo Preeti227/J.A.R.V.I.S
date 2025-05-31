@@ -67,15 +67,25 @@
                 id="chatbox"
                 placeholder="Type Here...."
               />
+
               <button id="SendBtn" class="glow-on-hover" hidden>
                 <i class="bi bi-send"></i>
               </button>
+
               <button id="MicBtn" class="glow-on-hover">
                 <i class="bi bi-mic"></i>
               </button>
-              <button id="ChatBtn" class="glow-on-hover">
+
+              <button
+                id="ChatBtn"
+                class="glow-on-hover"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasScrolling"
+                aria-controls="offcanvasScrolling"
+              >
                 <i class="bi bi-chat-dots"></i>
               </button>
+
               <button id="SettingsBtn" class="glow-on-hover">
                 <i class="bi bi-gear"></i>
               </button>
@@ -83,6 +93,8 @@
           </div>
         </div>
       </section>
+
+      <!--SiriWave section-->
       <section id="SiriWave" class="mb-4" hidden>
         <div class="container">
           <div class="row">
@@ -98,20 +110,46 @@
         </div>
       </section>
     </div>
+
+    <div
+      class="offcanvas offcanvas-start chat-canvas"
+      data-bs-scroll="true"
+      data-bs-backdrop="false"
+      tabindex="-1"
+      id="offcanvasScrolling"
+      aria-labelledby="offcanvasScrollingLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-white" id="offcanvasScrollingLabel">
+          Chats
+        </h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div id="chat-canvas-body" class="offcanvas-body"></div>
+    </div>
+
     <!--Jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
     <!--Particle.js-->
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FitText.js/1.2.0/jquery.fittext.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/textillate/0.4.0/jquery.textillate.min.js"></script>
+
     <!--Siri library-->
     <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
 

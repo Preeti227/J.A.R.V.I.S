@@ -9,6 +9,7 @@ def speak(text):
     engine.setProperty('rate', 174) #speed of the voice
     #eel.DisplayMessage(text)
     engine.say(text) #speak according to the given text
+    eel.receiverText(text) #jarvis will speak the chatbox message
     engine.runAndWait() #delay while speaking 
 
 def takecommand():
@@ -34,8 +35,10 @@ def allCommands(message=1):
     if message==1:
         query=takecommand()
         print(query)
+        eel.senderText(query)
     else:
         query=message
+        eel.senderText(query)
 
     try:
 
