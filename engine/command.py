@@ -8,7 +8,7 @@ def speak(text):
     voices = engine.getProperty('voices') 
     engine.setProperty('voice', voices[0].id) # 3 voices in my system [0]-female, [1]-male, [2]-female
     engine.setProperty('rate', 174) #speed of the voice
-    #eel.DisplayMessage(text)
+    eel.DisplayMessage(text)
     engine.say(text) #speak according to the given text
     eel.receiverText(text) #jarvis will speak the chatbox message
     engine.runAndWait() #delay while speaking 
@@ -25,10 +25,10 @@ def takecommand():
         audio=r.listen(source, 10,6)
     try:
         print("Recognizing")
-        #eel.DisplayMessage('recognizing....')
+        eel.DisplayMessage('recognizing....')
         query=r.recognize_google(audio,language='en-in')
         print(f"User said: {query}")
-        #eel.DisplayMessage(query)
+        eel.DisplayMessage(query)
         time.sleep(2)
         
     except Exception as e:
