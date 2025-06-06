@@ -22,7 +22,7 @@ if __name__ == '__main__':
         # Let processes run
         p1.join()
     except KeyboardInterrupt:
-        # Graceful shutdown on Ctrl+C
+        
         if p2.is_alive():
             p2.terminate()
             p2.join()

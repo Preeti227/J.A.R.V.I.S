@@ -165,13 +165,19 @@ def whatsApp(mobile_no, message, flag, name):
     pyautogui.hotkey('enter')
     speak(jarvis_message)
 
-#chatbot
+
+
 def chatBot(query):
-    user_input = query.lower()
-    chatbot = hugchat.ChatBot(cookie_path="engine/cookies.json")
-    id = chatbot.new_conversation()
-    chatbot.change_conversation(id)
-    response =  chatbot.chat(user_input)
-    print(response)
-    speak(response)
-    return response
+    try:
+        user_input = query.lower()
+        chatbot = hugchat.ChatBot(cookie_path="engine/cookies.json")
+        id = chatbot.new_conversation()
+        chatbot.change_conversation(id)
+        response = chatbot.chat(user_input)
+        print(response)
+        speak(response)
+        return response
+    except Exception as e:
+        print(f"ChatBot Error: {e}")
+        speak("Sorry, I couldn't get a response from HuggingChat.")
+        return "Error"

@@ -2,9 +2,16 @@ import pyttsx3
 import speech_recognition as sr
 import eel
 import time
+
+engine = pyttsx3.init()
+
+#@eel.expose
+#def stopConversation():
+#    engine.stop()
+#    print("Conversation stopped by user.")
+
 def speak(text):
     text=str(text)
-    engine = pyttsx3.init()
     voices = engine.getProperty('voices') 
     engine.setProperty('voice', voices[0].id) # 3 voices in my system [0]-female, [1]-male, [2]-female
     engine.setProperty('rate', 174) #speed of the voice
