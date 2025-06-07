@@ -5,3 +5,4 @@ engine/cookies.json
 engine/__pycache__/command.cpython-313.pyc
 engine/__pycache__/features.cpython-313.pyc
 engine/__pycache__
+engine/__pycache__/features

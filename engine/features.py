@@ -6,7 +6,6 @@ import subprocess
 import time
 import webbrowser
 import eel
-from hugchat import hugchat  # or from hugchat import ChatBot
 import pvporcupine
 import pyaudio
 import pyautogui
@@ -167,17 +166,24 @@ def whatsApp(mobile_no, message, flag, name):
 
 
 
+import google.generativeai as genai
 def chatBot(query):
+    API_KEY = "AIzaSyD0g4ihRizxhnObuESNwZDAHKjBCAalxTk" 
+
+    genai.configure(api_key=API_KEY)
+
     try:
         user_input = query.lower()
-        chatbot = hugchat.ChatBot(cookie_path="engine/cookies.json")
-        id = chatbot.new_conversation()
-        chatbot.change_conversation(id)
-        response = chatbot.chat(user_input)
-        print(response)
-        speak(response)
-        return response
+        model = genai.GenerativeModel('gemini-1.5-flash') 
+        chat = model.start_chat(history=[]) 
+        response = chat.send_message(user_input)
+        reply = response.text.strip()        
+        print(reply)
+        speak(reply) 
+        
+        return reply
+
     except Exception as e:
-        print(f"ChatBot Error: {e}")
-        speak("Sorry, I couldn't get a response from HuggingChat.")
+        print(f"ChatBot Error: {str(e)}")
+        speak("Sorry, I couldn't get a response from Gemini.")
         return "Error"

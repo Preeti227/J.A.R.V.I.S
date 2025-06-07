@@ -44,11 +44,4 @@ $(document).ready(function () {
       chatBox.scrollTop = chatBox.scrollHeight;
     }
   }
-
-  // Stop button handler — hides SiriWave, shows Oval, and stops backend speech
-  //$("#StopBtn").click(function () {
-  //  $("#SiriWave").attr("hidden", true);
-  //  $("#Oval").attr("hidden", false);
-  //  eel.stopConversation(); // call to Python to stop TTS/conversation logic
-  //});
 });

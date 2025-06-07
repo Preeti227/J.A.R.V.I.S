@@ -5,11 +5,6 @@ import time
 
 engine = pyttsx3.init()
 
-#@eel.expose
-#def stopConversation():
-#    engine.stop()
-#    print("Conversation stopped by user.")
-
 def speak(text):
     text=str(text)
     voices = engine.getProperty('voices') 

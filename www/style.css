@@ -92,6 +92,7 @@ body {
   outline: none;
   color: white;
   font-family: cursive;
+  font-size: 16px;
 }
 
 .glow-on-hover {
@@ -188,6 +189,7 @@ body {
   width: auto;
   color: white;
   background-color: #0dcaf014;
+  font-size: 14px;
 }
 
 .sender_message {
@@ -197,6 +199,7 @@ body {
   width: auto;
   color: white;
   background-color: #0045ff;
+  font-size: 14px;
 }
 .width-size {
   max-width: 80%;
@@ -214,4 +217,15 @@ body {
     brightness(100%) contrast(101%);
 }
 
+h5.text.text-center {
+  font-size: 1.25rem; /* Default h5 size, adjust as needed. e.g., 1rem for smaller */
+}
+
+.siri-message {
+  font-size: 20px !important; /* Reduced from 28px. Use !important if needed to override inline style */
+}
+
+.offcanvas-title {
+  font-size: 1.25rem; /* Default h5 size, adjust as needed. e.g., 1rem for smaller */
+}
 /* Chat Box Start End*/
