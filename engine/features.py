@@ -9,19 +9,35 @@ import eel
 import pvporcupine
 import pyaudio
 import pyautogui
-from engine.command import speak
+import requests
+
 from engine.config import ASSISTANT_NAME
-
-
-
+import requests
 import sqlite3
 import pywhatkit as kit
-
 from engine.helper import extract_yt_term, remove_words
+import engine.features as features
+
+
 con = sqlite3.connect("jarvis.db")
 cursor = con.cursor()
 
+@eel.expose
+def cancelExecution():
+    print("Cancel execution called!")
+    features.interrupt_flag = True
+    from engine.command import engine
+    engine.stop()       # Immediately stop any speaking
+    eel.ShowHood()
+
+
 def openCommand(query):
+    from engine.command import speak
+
+    if features.interrupt_flag:
+        print("Execution interrupted!")
+        return
+
     query = query.replace(ASSISTANT_NAME, "")
     query = query.replace("open", "")
     query.lower()
@@ -60,6 +76,11 @@ def openCommand(query):
 
 
 def PlayYoutube(query):
+    from engine.command import speak
+
+    if features.interrupt_flag:
+        print("Execution interrupted!")
+        return
     search_term=extract_yt_term(query)
     if search_term:
         speak("Playing " + search_term + " on YouTube")
@@ -107,7 +128,7 @@ def hotword():
 
  #find contacts       
 def findContact(query):
-    
+    from engine.command import speak
     
     words_to_remove = [ASSISTANT_NAME, 'make', 'a', 'to', 'phone', 'call', 'send', 'message', 'wahtsapp', 'video']
     query = remove_words(query, words_to_remove)
@@ -127,6 +148,7 @@ def findContact(query):
         return 0, 0
     
 def whatsApp(mobile_no, message, flag, name):
+    from engine.command import speak
 
     if flag == 'message':
         target_tab = 12
@@ -168,6 +190,14 @@ def whatsApp(mobile_no, message, flag, name):
 
 import google.generativeai as genai
 def chatBot(query):
+
+    from engine.command import speak
+
+    if features.interrupt_flag:
+        print("Execution interrupted!")
+        return
+
+    
     API_KEY = "AIzaSyD0g4ihRizxhnObuESNwZDAHKjBCAalxTk" 
 
     genai.configure(api_key=API_KEY)
@@ -187,3 +217,43 @@ def chatBot(query):
         print(f"ChatBot Error: {str(e)}")
         speak("Sorry, I couldn't get a response from Gemini.")
         return "Error"
+    
+
+#Temperature feature
+def getTemperature(query=None):
+    from engine.command import speak, takecommand
+    if features.interrupt_flag:
+        print("Execution interrupted!")
+        return
+    city = None
+    
+    if query:
+        # Extract city name from text query
+        city = query.lower()
+        for word in ["temperature", "in", "what's", "what is", "tell me", "the", "of", "jarvis"]:
+            city = city.replace(word, "")
+        city = city.strip()
+    
+    if not city:
+        speak("Which city's temperature would you like to know?")
+        city = takecommand()
+        if not city:
+            speak("Sorry, I didn't catch the city name.")
+            return
+    
+    api_key = "b1b996f09ab4fb7147018901a1a170e1"
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+    
+    try:
+        response = requests.get(url).json()
+        if response.get("cod") == 200:
+            temp = response["main"]["temp"]
+            condition = response["weather"][0]["description"]
+            speak(f"The temperature in {city.title()} is {temp} degree Celsius with {condition}.")
+        else:
+            speak("City not found or unable to get weather data.")
+    except Exception as e:
+        print("Weather API error:", e)
+        speak("Sorry, I couldn't fetch the temperature right now.")
+
+

@@ -2,18 +2,35 @@ import pyttsx3
 import speech_recognition as sr
 import eel
 import time
+import engine.features as features 
 
 engine = pyttsx3.init()
 
 def speak(text):
-    text=str(text)
+    if features.interrupt_flag:
+        print("[Speak] Interrupted before speaking.")
+        return
+
+    text = str(text)
     voices = engine.getProperty('voices') 
-    engine.setProperty('voice', voices[0].id) # 3 voices in my system [0]-female, [1]-male, [2]-female
-    engine.setProperty('rate', 174) #speed of the voice
+    engine.setProperty('voice', voices[0].id)
+    engine.setProperty('rate', 174)
+
     eel.DisplayMessage(text)
-    engine.say(text) #speak according to the given text
-    eel.receiverText(text) #jarvis will speak the chatbox message
-    engine.runAndWait() #delay while speaking 
+    eel.receiverText(text)
+
+    engine.say(text)
+
+    # Run and wait but allow interrupt by checking flag
+    try:
+        engine.runAndWait()
+    except RuntimeError:
+        print("[Speak] Runtime error in pyttsx3")
+
+    if features.interrupt_flag:
+        engine.stop()
+        print("[Speak] Interrupted during speech.")
+
 
 def takecommand():
 
@@ -36,8 +53,12 @@ def takecommand():
     except Exception as e:
         return ""
     return query.lower()
+    
 @eel.expose
 def allCommands(message=1):
+    import engine.features as features
+    features.interrupt_flag = False  # reset before new command
+
     if message==1:
         query=takecommand()
         print(query)
@@ -47,7 +68,9 @@ def allCommands(message=1):
         eel.senderText(query)
 
     try:
-
+        if features.interrupt_flag:
+            return
+        
         if "open" in query:
             from engine.features import openCommand
             openCommand(query)
@@ -71,7 +94,11 @@ def allCommands(message=1):
                     message = 'video call'
                     
                 whatsApp(contact_no, query, message, name)
+        elif "temperature" in query or "weather" in query:
+            from engine.features import getTemperature    
+            getTemperature(query)
 
+    
         else:
             from engine.features import chatBot
             chatBot(query)

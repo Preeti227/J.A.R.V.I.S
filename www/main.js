@@ -34,11 +34,16 @@ $(document).ready(function () {
       sync: true,
     },
   });
-  //mic button
-  $("#MicBtn").click(function () {
-    $("#Oval").attr("hidden", true);
-    $("#SiriWave").attr("hidden", false);
-    eel.allCommands()();
+  //EXit button
+  $(document).on("click", "#ExitBtn", function () {
+    console.log("❌ Exit button clicked");
+    try {
+      eel.cancelExecution(); // No double parens
+    } catch (e) {
+      console.error("eel.cancelExecution() error:", e);
+    }
+    $("#SiriWave").attr("hidden", true);
+    $("#Oval").attr("hidden", false);
   });
 
   function doc_keyUp(e) {

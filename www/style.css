@@ -229,3 +229,9 @@ h5.text.text-center {
   font-size: 1.25rem; /* Default h5 size, adjust as needed. e.g., 1rem for smaller */
 }
 /* Chat Box Start End*/
+
+#ExitBtn {
+  position: relative;
+  z-index: 9999;
+  background-color: rgba(255, 0, 0, 0.5); /* temporary for visibility */
+}
