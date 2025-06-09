@@ -19,6 +19,7 @@ from engine.helper import extract_yt_term, remove_words
 import engine.features as features
 
 
+
 con = sqlite3.connect("jarvis.db")
 cursor = con.cursor()
 
@@ -32,7 +33,7 @@ def cancelExecution():
 
 
 def openCommand(query):
-    from engine.command import speak
+    from engine.command import speak,takecommand
 
     if features.interrupt_flag:
         print("Execution interrupted!")
@@ -187,26 +188,35 @@ def whatsApp(mobile_no, message, flag, name):
     speak(jarvis_message)
 
 
-
 import google.generativeai as genai
 def chatBot(query):
 
     from engine.command import speak
 
+    # Immediately exit if interrupted
     if features.interrupt_flag:
-        print("Execution interrupted!")
+        print("Execution interrupted")
         return
 
-    
     API_KEY = "AIzaSyD0g4ihRizxhnObuESNwZDAHKjBCAalxTk" 
-
     genai.configure(api_key=API_KEY)
 
     try:
         user_input = query.lower()
         model = genai.GenerativeModel('gemini-1.5-flash') 
         chat = model.start_chat(history=[]) 
+
+        # Double-check interrupt before sending
+        if features.interrupt_flag:
+            print("Execution interrupted before sending message!")
+            return
+
         response = chat.send_message(user_input)
+
+        if features.interrupt_flag:
+            print("Execution interrupted after response, before speaking!")
+            return
+
         reply = response.text.strip()        
         print(reply)
         speak(reply) 
@@ -217,7 +227,6 @@ def chatBot(query):
         print(f"ChatBot Error: {str(e)}")
         speak("Sorry, I couldn't get a response from Gemini.")
         return "Error"
-    
 
 #Temperature feature
 def getTemperature(query=None):

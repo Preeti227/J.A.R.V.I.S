@@ -45,6 +45,12 @@ $(document).ready(function () {
     $("#SiriWave").attr("hidden", true);
     $("#Oval").attr("hidden", false);
   });
+  // Mic button click event
+  $("#MicBtn").click(function () {
+    $("#Oval").attr("hidden", true);
+    $("#SiriWave").attr("hidden", false);
+    eel.allCommands(); // This will call takecommand() in Python
+  });
 
   function doc_keyUp(e) {
     // this would test for whichever key is 40 (down arrow) and the ctrl key at the same time

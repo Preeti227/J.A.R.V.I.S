@@ -101,6 +101,7 @@ def allCommands(message=1):
     
         else:
             from engine.features import chatBot
+            features.interrupt_flag = False
             chatBot(query)
     except:
         print("Error")
