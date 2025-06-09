@@ -68,7 +68,14 @@ $(document).ready(function () {
     if (message != "") {
       $("#Oval").attr("hidden", true);
       $("#SiriWave").attr("hidden", false);
-      eel.allCommands(message);
+      if (
+        message.toLowerCase().startsWith("open file") ||
+        message.toLowerCase().startsWith("search file")
+      ) {
+        eel.findAndOpenFile(message);
+      } else {
+        eel.allCommands(message); // your regular assistant commands
+      }
       $("#chatbox").val("");
       $("#MicBtn").attr("hidden", false);
       $("#SendBtn").attr("hidden", true);

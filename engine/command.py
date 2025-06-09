@@ -2,7 +2,8 @@ import pyttsx3
 import speech_recognition as sr
 import eel
 import time
-import engine.features as features 
+import engine.features as features
+from engine.search_files import findAndOpenFile 
 
 engine = pyttsx3.init()
 
@@ -67,6 +68,8 @@ def allCommands(message=1):
         query=message
         eel.senderText(query)
 
+    query = query.lower()
+
     try:
         if features.interrupt_flag:
             return
@@ -97,8 +100,12 @@ def allCommands(message=1):
         elif "temperature" in query or "weather" in query:
             from engine.features import getTemperature    
             getTemperature(query)
+        
+        elif "open file" in query or "search file" in query or "find file" in query:
+            print(f"[DEBUG] Recognized file open/search command: '{query}'")
+            findAndOpenFile(query)
 
-    
+
         else:
             from engine.features import chatBot
             features.interrupt_flag = False

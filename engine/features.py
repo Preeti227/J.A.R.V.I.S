@@ -17,6 +17,7 @@ import sqlite3
 import pywhatkit as kit
 from engine.helper import extract_yt_term, remove_words
 import engine.features as features
+from engine.search_files import findAndOpenFile
 
 
 
@@ -187,7 +188,7 @@ def whatsApp(mobile_no, message, flag, name):
     pyautogui.hotkey('enter')
     speak(jarvis_message)
 
-
+#Chatbot using gemini
 import google.generativeai as genai
 def chatBot(query):
 
@@ -198,7 +199,8 @@ def chatBot(query):
         print("Execution interrupted")
         return
 
-    API_KEY = "AIzaSyD0g4ihRizxhnObuESNwZDAHKjBCAalxTk" 
+    from engine.credentials import API_KEY
+ 
     genai.configure(api_key=API_KEY)
 
     try:
@@ -250,9 +252,9 @@ def getTemperature(query=None):
             speak("Sorry, I didn't catch the city name.")
             return
     
-    api_key = "b1b996f09ab4fb7147018901a1a170e1"
+  
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
-    
+    from engine.credentials import api_key
     try:
         response = requests.get(url).json()
         if response.get("cod") == 200:
@@ -264,5 +266,8 @@ def getTemperature(query=None):
     except Exception as e:
         print("Weather API error:", e)
         speak("Sorry, I couldn't fetch the temperature right now.")
+
+
+
 
 
