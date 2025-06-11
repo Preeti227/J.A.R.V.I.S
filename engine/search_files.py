@@ -36,18 +36,19 @@ def extract_filename(query):
 @eel.expose
 def findAndOpenFile(query):
     from engine.command import speak
-    print(f"[DEBUG] findAndOpenFile called with query: '{query}'")
+    #print(f"[DEBUG] findAndOpenFile called with query: '{query}'")
     
     filename = extract_filename(query)
     print(f"Extracted filename: '{filename}'")
     
     if not filename:
-        print("No filename specified in query.")
-        speak("No filename specified in query")
+        print("No filename specified in query.")        
         eel.DisplayMessage("Please specify the filename to open.")
+        speak("No filename specified in query")
         return
 
     print(f"Searching for '{filename}' in '{DEFAULT_SEARCH_PATH}'")
+    eel.DisplayMessage(f"Searching for '{filename}'")
     results = search_files(filename)
 
     if results:
@@ -57,17 +58,17 @@ def findAndOpenFile(query):
         if os.path.exists(path_to_open):
             try:
                 os.startfile(path_to_open)
-                print("File opened successfully.")
-                speak("File opened successfully")
+                print("File opened successfully.")                
                 eel.DisplayMessage(f"Opening file: {os.path.basename(path_to_open)}")
+                speak("File opened successfully")
             except Exception as e:
                 print(f"[ERROR] Failed to open file: {e}")
-                speak(f"[ERROR] Failed to open file: {e}")
                 eel.DisplayMessage(f"Error: Could not open file: {e}")
+                speak(f"[ERROR] Failed to open file: {e}")
         else:
-            print(f"[ERROR] File does not exist: {path_to_open}")
-            speak(f"[ERROR] File does not exist: {path_to_open}")
+            print(f"[ERROR] File does not exist: {path_to_open}")            
             eel.DisplayMessage("File path does not exist.")
+            speak(f"[ERROR] File does not exist: {path_to_open}")
     else:
         print("File not found!")
         eel.DisplayMessage("File not found.")

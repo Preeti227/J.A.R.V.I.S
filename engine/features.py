@@ -19,6 +19,7 @@ from engine.helper import extract_yt_term, remove_words
 import engine.features as features
 from engine.search_files import findAndOpenFile
 
+interrupt_flag = False
 
 
 con = sqlite3.connect("jarvis.db")
@@ -252,9 +253,9 @@ def getTemperature(query=None):
             speak("Sorry, I didn't catch the city name.")
             return
     
-  
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     from engine.credentials import api_key
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+    
     try:
         response = requests.get(url).json()
         if response.get("cod") == 200:
@@ -267,6 +268,13 @@ def getTemperature(query=None):
         print("Weather API error:", e)
         speak("Sorry, I couldn't fetch the temperature right now.")
 
+def makeCall(name, mobileNo):
+    from engine.command import speak
+    mobileNo =mobileNo.replace(" ", "")
+    speak("Calling "+name)
+    #command = 'adb shell am start -a android.intent.action.CALL -d tel:'+mobileNo
+    command = 'adb shell service call phone 1 s16 "tel:'+mobileNo
+    os.system(command)
 
 
 

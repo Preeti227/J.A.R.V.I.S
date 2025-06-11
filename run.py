@@ -1,4 +1,5 @@
 import multiprocessing
+import subprocess
 import time
 
 def startJarvis():
@@ -16,6 +17,7 @@ if __name__ == '__main__':
     p2 = multiprocessing.Process(target=listenHotword)
 
     p1.start()
+    subprocess.call((r'device.bat'))
     p2.start()
 
     try:
